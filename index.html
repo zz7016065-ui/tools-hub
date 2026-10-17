@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Global Web Utilities Hub | منصة الأدوات الذكية</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            background-color: #0b0f19;
+            color: #f8fafc;
+            font-family: system-ui, -apple-system, sans-serif;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        header {
+            text-align: center;
+            margin-bottom: 25px;
+            padding: 0 10px;
+        }
+        h1 { font-size: 22px; color: #38bdf8; margin-bottom: 6px; }
+        p.subtitle { color: #94a3b8; font-size: 13px; }
+
+        /* حاوية الأقسام المترتبة */
+        .container {
+            width: 100%;
+            max-width: 600px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .tool-card {
+            background-color: #1e293b;
+            border: 1px solid #334155;
+            border-radius: 14px;
+            padding: 18px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+        }
+
+        .tool-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 14px;
+            font-size: 15px;
+            font-weight: bold;
+            color: #38bdf8;
+            border-bottom: 1px solid #334155;
+            padding-bottom: 8px;
+        }
+
+        textarea, input[type="text"] {
+            width: 100%;
+            background-color: #0f172a;
+            border: 1px solid #475569;
+            border-radius: 8px;
+            color: #f1f5f9;
+            padding: 12px;
+            font-size: 14px;
+            font-family: monospace;
+            outline: none;
+            margin-bottom: 12px;
+        }
+        textarea { height: 110px; resize: vertical; }
+        textarea:focus, input[type="text"]:focus { border-color: #38bdf8; }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            margin-bottom: 12px;
+            text-align: center;
+        }
+        .stat-box {
+            background-color: #0f172a;
+            padding: 8px;
+            border-radius: 6px;
+            border: 1px solid #334155;
+        }
+        .stat-number { font-size: 15px; font-weight: bold; color: #38bdf8; }
+        .stat-label { font-size: 11px; color: #94a3b8; }
+
+        .pass-options {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-bottom: 12px;
+            font-size: 13px;
+            color: #cbd5e1;
+            background: #0f172a;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid #334155;
+        }
+        .option-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .actions {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+        button {
+            padding: 10px;
+            border: none;
+            border-radius: 6px;
+            background-color: #0284c7;
+            color: white;
+            font-size: 13px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        button:hover { background-color: #0369a1; }
+        .btn-green { background-color: #16a34a; }
+        .btn-green:hover { background-color: #15803d; }
+        .full-width { grid-column: span 2; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>🌐 Global Web Utilities Hub</h1>
+        <p class="subtitle">المنصة الشاملة لأدوات المبرمجين وصناع المحتوى</p>
+    </header>
+
+    <div class="container">
+        <!-- الأداة 1: معالج النصوص -->
+        <div class="tool-card">
+            <div class="tool-header">📝 1. معالج وتنظيف النصوص الذكي</div>
+            <textarea id="inputText" placeholder="ضع النص هنا..." oninput="analyzeText()"></textarea>
+            <div class="stats-grid">
+                <div class="stat-box"><div class="stat-number" id="wordCount">0</div><div class="stat-label">الكلمات</div></div>
+                <div class="stat-box"><div class="stat-number" id="charCount">0</div><div class="stat-label">الأحرف</div></div>
+                <div class="stat-box"><div class="stat-number" id="readingTime">0 د</div><div class="stat-label">وقت القراءة</div></div>
+            </div>
+            <div class="actions">
+                <button onclick="cleanSpaces()">حذف المسافات الزائدة</button>
+                <button onclick="capitalizeText()">حروف كبيرة (ENG)</button>
+                <button class="btn-green full-width" onclick="copyText('inputText')">📋 نسخ النص المعالج</button>
+            </div>
+        </div>
+
+        <!-- الأداة 2: ضاغط ومنسق الأكواد -->
+        <div class="tool-card">
+            <div class="tool-header">💻 2. ضاغط ومنسق أكواد HTML / CSS</div>
+            <textarea id="codeText" placeholder="ضع كود HTML أو CSS هنا..."></textarea>
+            <div class="actions">
+                <button onclick="minifyCode()">تصغير الكود (Minify)</button>
+                <button onclick="formatCode()">تنسيق وترتيب الكود</button>
+                <button class="btn-green full-width" onclick="copyText('codeText')">📋 نسخ الكود المعالج</button>
+            </div>
+        </div>
+
+        <!-- الأداة 3: مولد كلمات المرور -->
+        <div class="tool-card">
+            <div class="tool-header">🔐 3. مولد كلمات المرور المشفرة والآمنة</div>
+            <input type="text" id="passResult" placeholder="اضغط على زر التوليد..." readonly>
+            <div class="pass-options">
+                <div class="option-row">
+                    <label>طول كلمة المرور:</label>
+                    <input type="number" id="passLength" value="16" min="8" max="32" style="width: 55px; padding: 4px; text-align: center; border-radius: 4px; border: 1px solid #475569; background: #1e293b; color: white;">
+                </div>
+                <div class="option-row"><label><input type="checkbox" id="includeSymbols" checked> شمول الرموز الخاصة</label></div>
+                <div class="option-row"><label><input type="checkbox" id="includeNumbers" checked> شمول الأرقام</label></div>
+            </div>
+            <div class="actions">
+                <button onclick="generatePassword()">⚡ توليد كلمة مرور</button>
+                <button class="btn-green" onclick="copyText('passResult')">📋 نسخ</button>
+            </div>
+        </div>
+
+        <!-- الأداة 4: محلل ومصحح صيغ الأكواد -->
+        <div class="tool-card">
+            <div class="tool-header">🔍 4. محلل ومصحح صيغ JSON والأكواد</div>
+            <textarea id="jsonText" placeholder="الصق بيانات JSON أو كود لفحصه وتنسيقه..."></textarea>
+            <div class="actions">
+                <button onclick="formatJSON()" class="full-width">✨ تنسيق وتحليل بيانات JSON</button>
+                <button class="btn-green full-width" onclick="copyText('jsonText')">📋 نسخ النتيجة</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function analyzeText() {
+            const text = document.getElementById('inputText').value;
+            const words = text.trim() ? text.trim().split(/\s+/).length : 0;
+            const chars = text.length;
+            document.getElementById('wordCount').innerText = words;
+            document.getElementById('charCount').innerText = chars;
+            document.getElementById('readingTime').innerText = Math.ceil(words / 200) + " د";
+        }
+        function cleanSpaces() {
+            const ta = document.getElementById('inputText');
+            ta.value = ta.value.replace(/[ \t]+/g, ' ').replace(/^\s+|\s+$/gm, '');
+            analyzeText();
+        }
+        function capitalizeText() {
+            const ta = document.getElementById('inputText');
+            ta.value = ta.value.toUpperCase();
+            analyzeText();
+        }
+        function minifyCode() {
+            const ta = document.getElementById('codeText');
+            ta.value = ta.value.replace(/\s+/g, ' ').replace(/> </g, '><').trim();
+        }
+        function formatCode() {
+            const ta = document.getElementById('codeText');
+            let code = ta.value.replace(/\s+/g, ' ').trim();
+            code = code.replace(/{/g, ' {\n  ').replace(/;/g, ';\n  ').replace(/}/g, '\n}\n');
+            ta.value = code;
+        }
+        function generatePassword() {
+            const length = parseInt(document.getElementById('passLength').value) || 16;
+            let chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            if (document.getElementById('includeNumbers').checked) chars += "0123456789";
+            if (document.getElementById('includeSymbols').checked) chars += "!@#$%^&*()_+-=[]{}|;:,.<>?";
+            let pass = "";
+            for (let i = 0; i < length; i++) pass += chars[Math.floor(Math.random() * chars.length)];
+            document.getElementById('passResult').value = pass;
+        }
+        function formatJSON() {
+            const ta = document.getElementById('jsonText');
+            try {
+                let obj = JSON.parse(ta.value);
+                ta.value = JSON.stringify(obj, null, 4);
+                alert("تم تحليل وتنسيق الكود بنجاح!");
+            } catch (e) {
+                alert("عذراً، صيغة البيانات غير صحيحة (Invalid JSON)");
+            }
+        }
+        function copyText(id) {
+            const el = document.getElementById(id);
+            if (!el.value) return;
+            el.select();
+            navigator.clipboard.writeText(el.value);
+            alert("تم النسخ بنجاح!");
+        }
+    </script>
+</body>
+</html>
